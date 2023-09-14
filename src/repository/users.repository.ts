@@ -29,9 +29,17 @@ async function deleteUser(id: string): Promise<QueryResult> {
   return resultado;
 }
 
+async function updateUser( name: string, email: string, id: string ): Promise<QueryResult> {
+
+  const resultado = await db.query('UPDATE users SET name = $1, email = $2 WHERE id = $3;', [name, email, id]);
+
+  return resultado;
+}
+
 export const usersRepository = {
   userexists,
   SalveUser,
   getUser,
-  deleteUser
+  deleteUser,
+  updateUser
 };

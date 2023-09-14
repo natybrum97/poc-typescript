@@ -30,3 +30,14 @@ export async function deleteUser (req: Request, res: Response) {
 
     res.sendStatus(httpStatus.NO_CONTENT);
 }
+
+export async function updateUser (req: Request, res: Response) {
+
+    const { id } = req.params;
+
+    const { name, email } = req.body as User;
+
+    await usersRepository.updateUser(name, email, id);
+
+    res.sendStatus(httpStatus.NO_CONTENT);
+}
