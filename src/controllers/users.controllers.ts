@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import { Request, Response } from "express";
 import { User } from "../protocols/users.protocols";
 import { usersRepository } from "../repository/users.repository";
+import { errors } from "../erros/erros";
 
 
 export async function postUser(req: Request, res: Response) {
@@ -17,9 +18,9 @@ export async function postUser(req: Request, res: Response) {
 
 export async function getUser (req: Request, res: Response) {
 
-    const passengers = await usersRepository.getUser();
+    const users = await usersRepository.getUser();
 
-    return res.status(httpStatus.OK).send(passengers.rows);
+    return res.status(httpStatus.OK).send(users.rows);
 }
 
 export async function deleteUser (req: Request, res: Response) {
@@ -37,7 +38,13 @@ export async function updateUser (req: Request, res: Response) {
 
     const { name, email } = req.body as User;
 
-    await usersRepository.updateUser(name, email, id);
+    const resultado = await usersRepository.existsUser(id);
+
+    if (resultado.rows.length === 0) throw errors.notFound("Esse usuário")
+
+   await usersRepository.updateUser(name, email, id);
+
+    
 
     res.sendStatus(httpStatus.NO_CONTENT);
 }

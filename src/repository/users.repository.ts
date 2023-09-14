@@ -36,10 +36,18 @@ async function updateUser( name: string, email: string, id: string ): Promise<Qu
   return resultado;
 }
 
+async function existsUser(id: string): Promise<QueryResult> {
+
+  const resultado = await db.query('SELECT * FROM users WHERE id = $1;', [id]);
+
+  return resultado;
+}
+
 export const usersRepository = {
   userexists,
   SalveUser,
   getUser,
   deleteUser,
-  updateUser
+  updateUser,
+  existsUser
 };
