@@ -15,7 +15,23 @@ async function SalveUser(name: string, email: string): Promise<QueryResult> {
   return result;
 }
 
+async function getUser(): Promise<QueryResult> {
+
+  const resultado = await db.query('SELECT * FROM users;');
+
+  return resultado;
+}
+
+async function deleteUser(id: string): Promise<QueryResult> {
+
+  const resultado = await db.query('DELETE FROM users WHERE id = $1;', [id]);
+
+  return resultado;
+}
+
 export const usersRepository = {
   userexists,
-  SalveUser
+  SalveUser,
+  getUser,
+  deleteUser
 };
