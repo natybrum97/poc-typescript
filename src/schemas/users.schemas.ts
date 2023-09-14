@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CreateUser } from "protocols/users.protocols";
+import { CreateUser } from "../protocols/users.protocols";
 
 export const usersSchema = Joi.object<CreateUser>({
     name: Joi.string().required(),

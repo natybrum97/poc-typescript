@@ -27,5 +27,7 @@ export default function errorHandler(error: CustomError, req: Request, res: Resp
         return res.status(httpStatus.BAD_REQUEST).send(error.message);
     }
 
+    console.log(error);
+
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Desculpe, houve um erro! 😢");
 }
